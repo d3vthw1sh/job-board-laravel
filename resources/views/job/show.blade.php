@@ -21,19 +21,19 @@
     @endcan
   </x-job-card>
 
-  {{-- Matching "More jobs at..." card --}}
-  <x-card class="p-6 mb-10 bg-white border border-gray-100 shadow-sm rounded-lg text-gray-800">
+  {{-- "More jobs at..." card matching style and theme --}}
+  <x-card class="p-6 mb-10 bg-gray-900 border border-gray-800 shadow-sm rounded-lg text-white">
     <h2 class="mb-4 text-lg font-semibold">
       More jobs at {{ $job->employer->company_name }}
     </h2>
 
-    <div class="divide-y divide-gray-100 text-sm text-gray-600">
+    <div class="divide-y divide-gray-800 text-sm">
       @foreach ($job->employer->jobs as $otherJob)
         <div class="flex justify-between py-3">
           <div>
             <a
               href="{{ route('jobs.show', $otherJob) }}"
-              class="text-blue-600 hover:underline font-medium"
+              class="text-[#01C38D] hover:underline font-medium"
             >
               {{ $otherJob->title }}
             </a>
@@ -41,7 +41,7 @@
               {{ $otherJob->created_at->diffForHumans() }}
             </div>
           </div>
-          <div class="text-xs font-semibold text-gray-500">
+          <div class="text-xs font-semibold text-gray-300">
             ${{ number_format($otherJob->salary) }}
           </div>
         </div>
