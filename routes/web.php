@@ -8,20 +8,27 @@ use App\Http\Controllers\MyJobApplicationController;
 use App\Http\Controllers\MyJobController;
 use Illuminate\Support\Facades\Route;
 
+// NEW LANDING PAGE ROUTE
+Route::get('welcome', function () {
+    return view('landing');
+})->name('welcome');
+
+// MAIN JOB BOARD REDIRECT (root /)
 Route::get('', fn() => to_route('jobs.index'));
 
+// JOB BOARD ROUTES
 Route::resource('jobs', JobController::class)
     ->only(['index', 'show']);
 
-Route::get('login', fn() => to_route('auth.create'))
-    ->name('login');
+// AUTH ROUTES
+Route::get('login', fn() => to_route('auth.create'))->name('login');
 Route::resource('auth', AuthController::class)
     ->only(['create', 'store']);
-Route::delete('logout', fn() => to_route('auth.destroy'))
-    ->name('logout');
+Route::delete('logout', fn() => to_route('auth.destroy'))->name('logout');
 Route::delete('auth', [AuthController::class, 'destroy'])
     ->name('auth.destroy');
 
+// PROTECTED ROUTES (requires authentication)
 Route::middleware('auth')->group(function () {
     Route::resource('job.application', JobApplicationController::class)
         ->only(['create', 'store']);

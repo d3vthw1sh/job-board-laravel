@@ -14,7 +14,7 @@
     <!-- Left Side: Logo (1.5x bigger) -->
     <ul class="flex items-center space-x-4">
       <li>
-        <a href="{{ route('jobs.index') }}" class="flex items-center">
+        <a href="{{ url('/welcome') }}" class="flex items-center">
           <img src="{{ asset('logo.png') }}" alt="JobJik Logo" class="h-24 w-auto mr-2" />
         </a>
       </li>
