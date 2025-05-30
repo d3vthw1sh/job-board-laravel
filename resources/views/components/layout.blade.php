@@ -11,11 +11,11 @@
 <body class="from-10% via-30% to-90% mx-auto mt-10 max-w-2xl bg-[#121620] text-white">
 
   <nav class="mb-8 flex items-center justify-between px-6 py-4 rounded-lg bg-[#181c27] shadow-sm border border-[#23283a]">
-    <!-- Left Side: Home -->
+    <!-- Left Side: Logo (1.5x bigger) -->
     <ul class="flex items-center space-x-4">
       <li>
-        <a href="{{ route('jobs.index') }}" class="text-xl font-bold text-white hover:text-[#01C38D] transition-colors">
-          Home
+        <a href="{{ route('jobs.index') }}" class="flex items-center">
+          <img src="{{ asset('logo.png') }}" alt="JobJik Logo" class="h-24 w-auto mr-2" />
         </a>
       </li>
     </ul>
