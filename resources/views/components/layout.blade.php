@@ -47,7 +47,7 @@
         </li>
       @else
         <li>
-          <a href="{{ route('auth.create') }}" class="px-4 py-1 rounded-md bg-[#01C38D] text-gray-900 font-semibold hover:bg-[#019d6f] transition-colors">
+          <a href="{{ route('signin') }}" class="px-4 py-1 rounded-md bg-[#01C38D] text-gray-900 font-semibold hover:bg-[#019d6f] transition-colors">
             Sign in
           </a>
         </li>

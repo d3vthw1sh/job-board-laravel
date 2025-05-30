@@ -20,13 +20,18 @@ Route::get('', fn() => to_route('jobs.index'));
 Route::resource('jobs', JobController::class)
     ->only(['index', 'show']);
 
-// AUTH ROUTES
-Route::get('login', fn() => to_route('auth.create'))->name('login');
-Route::resource('auth', AuthController::class)
-    ->only(['create', 'store']);
+// SIGN IN ROUTE (NEW, replacing 'auth.create')
+Route::get('signin', [AuthController::class, 'showSignInForm'])->name('signin');
+Route::post('signin', [AuthController::class, 'store'])->name('signin.post');
+
+// AUTH ROUTES (rest)
 Route::delete('logout', fn() => to_route('auth.destroy'))->name('logout');
 Route::delete('auth', [AuthController::class, 'destroy'])
     ->name('auth.destroy');
+
+// REGISTER ROUTES (NEW)
+Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('register', [AuthController::class, 'register']);
 
 // PROTECTED ROUTES (requires authentication)
 Route::middleware('auth')->group(function () {

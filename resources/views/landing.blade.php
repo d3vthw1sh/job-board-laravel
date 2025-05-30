@@ -20,7 +20,7 @@
       <a href="{{ url('/welcome') }}" class="text-2xl font-bold text-[#01C38D]">JOBJIK</a>
     </div>
     <div>
-      <a href="{{ route('auth.create') }}"
+      <a href="{{ route('signin') }}"
          class="px-4 py-1 rounded-md bg-[#01C38D] text-gray-900 font-semibold hover:bg-[#019d6f] transition-colors">
         Sign in
       </a>
