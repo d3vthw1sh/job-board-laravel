@@ -9,6 +9,12 @@
 <body class="bg-[#121620] text-white min-h-screen flex items-center justify-center">
 
   <div class="w-full max-w-xl bg-[#181c27] border border-[#23283a] rounded-xl shadow-lg px-8 py-10">
+      <!-- Logo at the top center, clickable -->
+      <div class="flex justify-center mb-6">
+        <a href="{{ url('/welcome') }}">
+          <img src="{{ asset('logo.png') }}" alt="JobJik Logo" class="h-20" />
+        </a>
+      </div>
       <h2 class="text-3xl font-bold text-[#01C38D] mb-6 text-center">Sign Up</h2>
       <form action="{{ route('register') }}" method="POST">
           @csrf
