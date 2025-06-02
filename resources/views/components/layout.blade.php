@@ -8,51 +8,57 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="from-10% via-30% to-90% mx-auto mt-10 max-w-2xl bg-[#121620] text-white">
+<body class="mx-auto mt-10 max-w-2xl bg-[#121620] text-white">
 
-  <nav class="mb-8 flex items-center justify-between px-6 py-4 rounded-lg bg-[#181c27] shadow-sm border border-[#23283a]">
-    <!-- Left Side: Logo (1.5x bigger) -->
-    <ul class="flex items-center space-x-4">
-      <li>
-        <a href="{{ url('/welcome') }}" class="flex items-center">
-          <img src="{{ asset('logo.png') }}" alt="JobJik Logo" class="h-24 w-auto mr-2" />
-        </a>
-      </li>
-    </ul>
+  <nav class="mb-8 px-6 py-3 rounded-xl bg-[#181c27] shadow-sm border border-[#23283a]">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Left: Brand -->
+      <a href="{{ url('/welcome') }}" class="flex items-center gap-2 select-none">
+        <span class="text-[#01C38D] font-extrabold text-3xl tracking-wide">JOBJIK</span>
+      </a>
 
-    <!-- Right Side: Auth & Links -->
-    <ul class="flex items-center space-x-6">
       @auth
-        <li>
-          <span class="px-3 py-1 rounded-full bg-gray-800 font-semibold text-white">
+      <!-- Center: Icon Navigation -->
+      <div class="flex items-center gap-8">
+        <a href="{{ route('my-job-applications.index') }}"
+           class="flex flex-col items-center group px-1 focus:outline-none"
+           title="Applications">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-0.5 group-hover:text-[#01C38D] transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <title>Applications</title>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3 10h18M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10" />
+          </svg>
+          <span class="text-xs text-white group-hover:text-[#01C38D] transition select-none">Applications</span>
+        </a>
+        <a href="{{ route('my-jobs.index') }}"
+           class="flex flex-col items-center group px-1 focus:outline-none"
+           title="My Jobs">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-0.5 group-hover:text-[#01C38D] transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <title>My Jobs</title>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 3h6v4H9V3zm0 8h6m-6 4h6" />
+          </svg>
+          <span class="text-xs text-white group-hover:text-[#01C38D] transition select-none">My Jobs</span>
+        </a>
+      </div>
+      @endauth
+
+      <!-- Right: User/Logout -->
+      <div class="flex items-center gap-3">
+        @auth
+          <span class="bg-[#23283a] px-3 py-1 rounded-full font-semibold text-white truncate max-w-[110px] shadow-inner text-sm" title="{{ auth()->user()->name }}">
             {{ auth()->user()->name ?? 'Anonymous' }}
           </span>
-        </li>
-        <li>
-          <a href="{{ route('my-job-applications.index') }}" class="text-gray-300 hover:text-[#01C38D] transition-colors">
-            Applications
-          </a>
-        </li>
-        <li>
-          <a href="{{ route('my-jobs.index') }}" class="text-gray-300 hover:text-[#01C38D] transition-colors">
-            My Jobs
-          </a>
-        </li>
-        <li>
           <form action="{{ route('auth.destroy') }}" method="POST" class="inline">
             @csrf
             @method('DELETE')
-            <button class="ml-2 text-red-400 hover:text-red-500 transition-colors font-semibold">Logout</button>
+            <button class="ml-2 text-red-400 hover:text-red-500 transition font-semibold">Logout</button>
           </form>
-        </li>
-      @else
-        <li>
-          <a href="{{ route('signin') }}" class="px-4 py-1 rounded-md bg-[#01C38D] text-gray-900 font-semibold hover:bg-[#019d6f] transition-colors">
+        @else
+          <a href="{{ route('signin') }}" class="px-4 py-1 rounded-md bg-[#01C38D] text-gray-900 font-semibold hover:bg-[#019d6f] transition">
             Sign in
           </a>
-        </li>
-      @endauth
-    </ul>
+        @endauth
+      </div>
+    </div>
   </nav>
 
   @if (session('success'))

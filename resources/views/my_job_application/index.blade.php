@@ -20,6 +20,15 @@
             Average asking salary
             ${{ number_format($application->job->job_applications_avg_expected_salary) }}
           </div>
+          @if ($application->cv_path)
+            <div class="mt-2">
+              <a href="{{ route('job_applications.download_cv', $application->id) }}"
+                 class="text-blue-600 underline"
+                 target="_blank" rel="noopener">
+                Download CV
+              </a>
+            </div>
+          @endif
         </div>
         <div>
           <form action="{{ route('my-job-applications.destroy', $application) }}" method="POST">

@@ -15,9 +15,17 @@
               <div>
                 Applied {{ $application->created_at->diffForHumans() }}
               </div>
-              <div>
-                Download CV
-              </div>
+              @if ($application->cv_path)
+                <div>
+                  <a href="{{ route('job_applications.download_cv', $application->id) }}"
+                     class="text-blue-600 underline"
+                     target="_blank" rel="noopener">
+                    Download CV
+                  </a>
+                </div>
+              @else
+                <div>No CV uploaded</div>
+              @endif
             </div>
 
             <div>${{ number_format($application->expected_salary) }}</div>

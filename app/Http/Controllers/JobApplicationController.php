@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
+use App\Models\JobApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -23,8 +24,9 @@ class JobApplicationController extends Controller
             'cv' => 'required|file|mimes:pdf|max:2048'
         ]);
 
+        // Store file in storage/app/public/cvs
         $file = $request->file('cv');
-        $path = $file->store('cvs', 'local');
+        $path = $file->store('cvs', 'public'); // saves to storage/app/public/cvs
 
         $job->jobApplications()->create([
             'user_id' => $request->user()->id,
@@ -34,6 +36,23 @@ class JobApplicationController extends Controller
 
         return redirect()->route('jobs.show', $job)
             ->with('success', 'Job application submitted.');
+    }
+
+    // Download CV
+    public function downloadCV(JobApplication $application)
+    {
+        // Optional: Only allow employer to download (add logic if needed)
+        // if (auth()->id() !== $application->job->employer_id) {
+        //     abort(403, 'Unauthorized');
+        // }
+
+        $path = storage_path('app/public/' . $application->cv_path);
+
+        if (!file_exists($path)) {
+            abort(404, 'CV file not found.');
+        }
+
+        return response()->download($path);
     }
 
     public function destroy(string $id)
