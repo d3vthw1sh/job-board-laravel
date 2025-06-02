@@ -14,7 +14,7 @@
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <!-- Left: Brand -->
       <a href="{{ url('/welcome') }}" class="flex items-center gap-2 select-none">
-        <span class="text-[#01C38D] font-extrabold text-3xl tracking-wide">JOBJIK</span>
+        <span class="text-[#01C38D] font-extrabold text-3xl tracking-wide">JOBPADOY</span>
       </a>
 
       @auth

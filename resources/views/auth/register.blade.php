@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up - JobJik</title>
+  <title>Sign Up - JOBPADOY</title>
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-[#121620] text-white min-h-screen flex items-center justify-center">
@@ -12,7 +12,7 @@
       <!-- Logo at the top center, clickable -->
       <div class="flex justify-center mb-6">
         <a href="{{ url('/welcome') }}">
-          <img src="{{ asset('logo.png') }}" alt="JobJik Logo" class="h-20" />
+          <img src="{{ asset('logo.png') }}" alt="JOBPADOY Logo" class="h-20" />
         </a>
       </div>
       <h2 class="text-3xl font-bold text-[#01C38D] mb-6 text-center">Sign Up</h2>
