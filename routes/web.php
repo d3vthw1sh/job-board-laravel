@@ -6,6 +6,7 @@ use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\MyJobApplicationController;
 use App\Http\Controllers\MyJobController;
+use App\Http\Controllers\AdminJobController;
 use Illuminate\Support\Facades\Route;
 
 // NEW LANDING PAGE ROUTE
@@ -14,22 +15,19 @@ Route::get('welcome', function () {
 })->name('welcome');
 
 // MAIN JOB BOARD REDIRECT (root /)
-Route::get('', fn() => to_route('jobs.index'));
+Route::get('/', fn() => to_route('welcome'));
 
 // JOB BOARD ROUTES
 Route::resource('jobs', JobController::class)
     ->only(['index', 'show']);
 
-// SIGN IN ROUTE (NEW, replacing 'auth.create')
+// AUTH ROUTES
 Route::get('signin', [AuthController::class, 'showSignInForm'])->name('signin');
 Route::post('signin', [AuthController::class, 'store'])->name('signin.post');
-
-// AUTH ROUTES (rest)
 Route::delete('logout', fn() => to_route('auth.destroy'))->name('logout');
-Route::delete('auth', [AuthController::class, 'destroy'])
-    ->name('auth.destroy');
+Route::delete('auth', [AuthController::class, 'destroy'])->name('auth.destroy');
 
-// REGISTER ROUTES (NEW)
+// REGISTER ROUTES
 Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('register', [AuthController::class, 'register']);
 
@@ -47,7 +45,13 @@ Route::middleware('auth')->group(function () {
     Route::middleware('employer')
         ->resource('my-jobs', MyJobController::class);
 
-    // ==== NEW ROUTE: CV Download ====
+    // CV Download
     Route::get('/job-applications/{application}/download-cv', [JobApplicationController::class, 'downloadCV'])
         ->name('job_applications.download_cv');
+});
+
+// ADMIN PANEL ROUTES (requires auth and admin middleware)
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/jobs', [AdminJobController::class, 'index'])->name('admin.jobs.index');
+    Route::delete('/jobs/{job}', [AdminJobController::class, 'destroy'])->name('admin.jobs.destroy');
 });

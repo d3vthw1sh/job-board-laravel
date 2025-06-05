@@ -2,10 +2,12 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Laravel Job Board</title>
   @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <!-- If Alpine.js isn't already loaded elsewhere, uncomment the next line -->
+  <!-- <script src="//unpkg.com/alpinejs" defer></script> -->
 </head>
 
 <body class="bg-[#121620] text-white">
@@ -26,22 +28,41 @@
       <div class="flex-1 flex items-center justify-center gap-6">
         <a href="{{ route('jobs.index') }}" class="px-3 py-2 rounded-lg text-base font-medium hover:bg-[#23283a] hover:text-[#01C38D] focus-visible:outline-none transition @if(request()->routeIs('jobs.index')) bg-[#23283a] text-[#01C38D] font-semibold @endif">Jobs</a>
         @auth
-        <a href="{{ route('my-job-applications.index') }}" class="px-3 py-2 rounded-lg text-base font-medium hover:bg-[#23283a] hover:text-[#01C38D] focus-visible:outline-none transition @if(request()->routeIs('my-job-applications.index')) bg-[#23283a] text-[#01C38D] font-semibold @endif">Applications</a>
-        <a href="{{ route('my-jobs.index') }}" class="px-3 py-2 rounded-lg text-base font-medium hover:bg-[#23283a] hover:text-[#01C38D] focus-visible:outline-none transition @if(request()->routeIs('my-jobs.index')) bg-[#23283a] text-[#01C38D] font-semibold @endif">My Jobs</a>
+          <a href="{{ route('my-job-applications.index') }}" class="px-3 py-2 rounded-lg text-base font-medium hover:bg-[#23283a] hover:text-[#01C38D] focus-visible:outline-none transition @if(request()->routeIs('my-job-applications.index')) bg-[#23283a] text-[#01C38D] font-semibold @endif">Applications</a>
+          <a href="{{ route('my-jobs.index') }}" class="px-3 py-2 rounded-lg text-base font-medium hover:bg-[#23283a] hover:text-[#01C38D] focus-visible:outline-none transition @if(request()->routeIs('my-jobs.index')) bg-[#23283a] text-[#01C38D] font-semibold @endif">My Jobs</a>
         @endauth
       </div>
 
-      <!-- Right: User/Logout/Sign in -->
+      <!-- Right: User Dropdown or Sign in -->
       <div class="flex items-center gap-3">
         @auth
-          <span class="bg-[#23283a] px-4 py-1 rounded-full font-semibold text-white shadow-inner text-sm max-w-[130px] truncate" title="{{ auth()->user()->name }}">
-            {{ auth()->user()->name ?? 'Anonymous' }}
-          </span>
-          <form action="{{ route('auth.destroy') }}" method="POST" class="inline">
-            @csrf
-            @method('DELETE')
-            <button class="ml-2 px-3 py-1 rounded-md bg-red-500/20 text-red-400 hover:bg-red-600/50 hover:text-white font-semibold transition focus-visible:outline-none">Logout</button>
-          </form>
+          <div x-data="{ open: false }" class="relative">
+            <button @click="open = !open"
+              class="bg-[#23283a] px-4 py-1 rounded-full font-semibold text-white shadow-inner text-sm min-w-0 max-w-[180px] truncate flex items-center gap-1"
+              title="{{ auth()->user()->name }}">
+              <span class="truncate min-w-0">{{ auth()->user()->name ?? 'Anonymous' }}</span>
+              <svg class="w-4 h-4 ml-1 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            <div
+              x-show="open"
+              @click.away="open = false"
+              x-transition
+              class="absolute right-0 mt-2 w-44 rounded-md bg-[#181c27] border border-[#23283a] shadow-lg z-50 py-1"
+              style="display: none;"
+            >
+              @if(auth()->user()->is_admin)
+                <a href="{{ route('admin.jobs.index') }}" class="block px-4 py-2 text-sm text-[#01C38D] hover:bg-[#23283a]">Admin Panel</a>
+              @endif
+              <form action="{{ route('auth.destroy') }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-[#23283a]">Logout</button>
+              </form>
+            </div>
+          </div>
         @else
           <a href="{{ route('signin') }}" class="px-5 py-1.5 rounded-lg bg-[#01C38D] text-gray-900 font-bold shadow hover:bg-[#019d6f] transition focus-visible:outline-none">
             Sign in
@@ -71,4 +92,5 @@
     {{ $slot }}
   </main>
 </body>
+
 </html>
