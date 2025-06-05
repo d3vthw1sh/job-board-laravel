@@ -50,8 +50,8 @@ Route::middleware('auth')->group(function () {
         ->name('job_applications.download_cv');
 });
 
-// ADMIN PANEL ROUTES (requires auth and admin middleware)
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/jobs', [AdminJobController::class, 'index'])->name('admin.jobs.index');
-    Route::delete('/jobs/{job}', [AdminJobController::class, 'destroy'])->name('admin.jobs.destroy');
+// ADMIN PANEL ROUTES (standalone, no inline middleware)
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('jobs', [AdminJobController::class, 'index'])->name('jobs.index');
+    Route::delete('jobs/{id}', [AdminJobController::class, 'destroy'])->name('jobs.destroy');
 });

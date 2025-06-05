@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Job;
@@ -6,17 +7,27 @@ use Illuminate\Http\Request;
 
 class AdminJobController extends Controller
 {
-    // Show paginated list of jobs for admin
     public function index()
     {
-        $jobs = Job::paginate(15);
+        // Manual admin check
+        if (!auth()->check() || !auth()->user()->is_admin) {
+            return redirect('/');
+        }
+
+        $jobs = Job::with('employer')->latest()->paginate(10);
         return view('admin.jobs.index', compact('jobs'));
     }
 
-    // Delete a job by admin
-    public function destroy(Job $job)
+    public function destroy($id)
     {
+        // Manual admin check
+        if (!auth()->check() || !auth()->user()->is_admin) {
+            return redirect('/');
+        }
+
+        $job = Job::findOrFail($id);
         $job->delete();
+
         return redirect()->route('admin.jobs.index')->with('success', 'Job deleted successfully.');
     }
 }
