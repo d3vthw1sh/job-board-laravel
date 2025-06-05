@@ -21,9 +21,15 @@ class JobController extends Controller
             'category'
         );
 
+        // Pagination added here (10 jobs per page)
         return view(
             'job.index',
-            ['jobs' => Job::with('employer')->latest()->filter($filters)->get()]
+            [
+                'jobs' => Job::with('employer')
+                    ->latest()
+                    ->filter($filters)
+                    ->paginate(10)
+            ]
         );
     }
 
