@@ -4,24 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; // Import Auth facade
 
 class AdminJobController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Manual admin check
-        if (!auth()->check() || !auth()->user()->is_admin) {
+        if (!Auth::check() || !Auth::user()->is_admin) {
             return redirect('/');
         }
 
-        $jobs = Job::with('employer')->latest()->paginate(10);
+        $query = Job::with('employer')->latest();
+
+        // Filter by job title if search query is present
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        $jobs = $query->paginate(10)->withQueryString();
+
         return view('admin.jobs.index', compact('jobs'));
     }
 
     public function destroy($id)
     {
         // Manual admin check
-        if (!auth()->check() || !auth()->user()->is_admin) {
+        if (!Auth::check() || !Auth::user()->is_admin) {
             return redirect('/');
         }
 
