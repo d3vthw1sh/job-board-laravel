@@ -20,6 +20,18 @@
             Average asking salary
             ${{ number_format($application->job->job_applications_avg_expected_salary) }}
           </div>
+
+          {{-- Approval status --}}
+          @if ($application->approved_for_interview)
+            <div class="mt-2 px-2 py-1 rounded bg-green-100 text-green-700 text-xs inline-block">
+              Approved for Interview!
+            </div>
+          @else
+            <div class="mt-2 px-2 py-1 rounded bg-gray-200 text-gray-700 text-xs inline-block">
+              Pending approval
+            </div>
+          @endif
+
           @if ($application->cv_path)
             <div class="mt-2">
               <a href="{{ route('job_applications.download_cv', $application->id) }}"

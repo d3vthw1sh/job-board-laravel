@@ -26,8 +26,22 @@
               @else
                 <div>No CV uploaded</div>
               @endif
-            </div>
 
+              {{-- SHOW APPROVED STATUS OR APPROVE BUTTON --}}
+              @if ($application->approved_for_interview)
+                <div class="mt-2 px-2 py-1 rounded bg-green-100 text-green-700 text-xs inline-block">
+                  Approved for Interview
+                </div>
+              @else
+                <form action="{{ route('job_applications.approve', $application->id) }}" method="POST" class="mt-2 inline-block">
+                  @csrf
+                  <button type="submit"
+                    class="px-2 py-1 bg-indigo-500 hover:bg-indigo-600 text-white text-xs rounded">
+                    Approve for Interview
+                  </button>
+                </form>
+              @endif
+            </div>
             <div>${{ number_format($application->expected_salary) }}</div>
           </div>
         @empty
@@ -36,7 +50,6 @@
 
         <div class="flex space-x-2">
           <x-link-button href="{{ route('my-jobs.edit', $job) }}">Edit</x-link-button>
-
           <form action="{{ route('my-jobs.destroy', $job) }}" method="POST">
             @csrf
             @method('DELETE')

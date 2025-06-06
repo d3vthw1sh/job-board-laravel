@@ -55,6 +55,21 @@ class JobApplicationController extends Controller
         return response()->download($path);
     }
 
+    // Approve an applicant for interview
+    public function approveForInterview($id)
+    {
+        // Only allow admin to approve (change this logic as needed)
+        if (!auth()->user()->is_admin) {
+            abort(403, 'Unauthorized');
+        }
+
+        $application = JobApplication::findOrFail($id);
+        $application->approved_for_interview = true;
+        $application->save();
+
+        return back()->with('success', 'Applicant approved for interview.');
+    }
+
     public function destroy(string $id)
     {
         //

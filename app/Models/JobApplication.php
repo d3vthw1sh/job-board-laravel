@@ -10,7 +10,14 @@ class JobApplication extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['expected_salary', 'user_id', 'job_id', 'cv_path'];
+    // Add 'approved_for_interview' to fillable fields
+    protected $fillable = [
+        'expected_salary',
+        'user_id',
+        'job_id',
+        'cv_path',
+        'approved_for_interview', // <--- Add this line
+    ];
 
     public function job(): BelongsTo
     {

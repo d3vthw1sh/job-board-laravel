@@ -48,6 +48,10 @@ Route::middleware('auth')->group(function () {
     // CV Download
     Route::get('/job-applications/{application}/download-cv', [JobApplicationController::class, 'downloadCV'])
         ->name('job_applications.download_cv');
+
+    // Approve job application for interview (admin/employer only)
+    Route::post('/job-applications/{id}/approve', [JobApplicationController::class, 'approveForInterview'])
+        ->name('job_applications.approve');
 });
 
 // ADMIN PANEL ROUTES (standalone, no inline middleware)
