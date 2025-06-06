@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JOBPADOY - Welcome</title>
   <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+  <!-- Directly loading compiled Vite CSS & JS -->
+  <link rel="stylesheet" href="{{ asset('build/assets/app-DVNfL7y8.css') }}">
+  <script type="module" src="{{ asset('build/assets/app-BHoXII-e.js') }}"></script>
+
   <style>
     body {
       font-family: 'Urbanist', ui-sans-serif, system-ui, sans-serif;
