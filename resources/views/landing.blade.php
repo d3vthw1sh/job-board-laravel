@@ -6,9 +6,8 @@
   <title>JOBPADOY - Welcome</title>
   <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Directly loading compiled Vite CSS & JS -->
-  <link rel="stylesheet" href="{{ asset('build/assets/app-DVNfL7y8.css') }}">
-  <script type="module" src="{{ asset('build/assets/app-BHoXII-e.js') }}"></script>
+  <!-- Use Vite for CSS & JS assets -->
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
 
   <style>
     body {
